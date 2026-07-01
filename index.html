@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yarden — Software Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FAFAF7;
+    --ink: #15181C;
+    --muted: #5B6470;
+    --accent: #0E7C7B;
+    --accent2: #D98E2B;
+    --surface: #FFFFFF;
+    --border: #E4E1D9;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{ max-width:880px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- Tab nav (signature structural device) ---------- */
+  .tabbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,250,247,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .tabbar .wrap{ display:flex; align-items:center; gap:2px; overflow-x:auto; }
+  .tab{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:14px 16px 12px;
+    color:var(--muted);
+    border-bottom:2px solid transparent;
+    white-space:nowrap;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .tab:hover{ color:var(--ink); }
+  .tab.active{ color:var(--accent); border-bottom-color:var(--accent); }
+  .tab .dot{ color:var(--accent2); }
+
+  /* ---------- Hero / terminal ---------- */
+  .hero{ padding:96px 0 64px; }
+  .eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--accent);
+    letter-spacing:.02em; margin-bottom:18px; display:block;
+  }
+
+  .terminal{
+    background:#10131A;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 1px 2px rgba(0,0,0,.04), 0 12px 32px -16px rgba(16,19,26,.35);
+    margin-top:28px;
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:7px;
+    padding:11px 14px;
+    background:#171B24;
+    border-bottom:1px solid #232838;
+  }
+  .terminal-bar span{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .terminal-bar span:nth-child(1){ background:#EE6A5F; }
+  .terminal-bar span:nth-child(2){ background:#F5BD4F; }
+  .terminal-bar span:nth-child(3){ background:#61C454; }
+  .terminal-bar .title{
+    font-family:var(--mono); font-size:12px; color:#697086;
+    margin-left:8px;
+  }
+  .terminal-body{
+    font-family:var(--mono); font-size:14.5px;
+    padding:24px 22px 28px;
+    color:#D7DCE5;
+    min-height:128px;
+  }
+  .terminal-body .line{ display:flex; gap:10px; margin-bottom:6px; }
+  .terminal-body .prompt{ color:var(--accent2); flex-shrink:0; }
+  .terminal-out{ color:#8E97A8; margin-top:4px; }
+  .cursor{
+    display:inline-block; width:8px; height:16px; background:var(--accent);
+    margin-left:2px; vertical-align:-3px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  h1{
+    font-family:var(--mono);
+    font-size:clamp(28px,5vw,42px);
+    font-weight:700;
+    letter-spacing:-.01em;
+    margin-top:26px;
+  }
+  .role{ color:var(--muted); font-size:18px; margin-top:10px; max-width:50ch; }
+
+  /* ---------- Sections ---------- */
+  section{ padding:64px 0; border-top:1px solid var(--border); }
+  .label{
+    font-family:var(--mono); font-size:12px; color:var(--accent);
+    text-transform:uppercase; letter-spacing:.08em; margin-bottom:18px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .label::before{ content:'//'; color:var(--accent2); }
+
+  h2{ font-family:var(--mono); font-size:22px; margin-bottom:18px; }
+
+  .about-grid{ display:grid; grid-template-columns:1fr; gap:28px; max-width:620px; }
+  .about-grid p{ color:var(--ink); font-size:16px; }
+  .about-grid p + p{ margin-top:14px; }
+  .muted{ color:var(--muted); }
+
+  /* ---------- Projects ---------- */
+  .projects{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:680px){ .projects{ grid-template-columns:1fr; } }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:22px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .card:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .card-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .card h3{ font-family:var(--mono); font-size:16px; }
+  .card-links{ font-family:var(--mono); font-size:12px; color:var(--muted); flex-shrink:0; }
+  .card-links a{ color:var(--muted); }
+  .card-links a:hover{ color:var(--accent); }
+  .card p{ color:var(--muted); font-size:14.5px; margin:10px 0 14px; }
+
+  .stack{ display:flex; flex-wrap:wrap; gap:6px; }
+  .pill{
+    font-family:var(--mono); font-size:11.5px;
+    background:#F0F4F2; color:var(--accent);
+    border:1px solid #D6E6E1;
+    padding:3px 9px; border-radius:5px;
+  }
+
+  /* ---------- Skills ---------- */
+  .skills-code{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:24px 26px; font-family:var(--mono); font-size:14px; overflow-x:auto;
+  }
+  .skills-code .kw{ color:var(--accent); }
+  .skills-code .str{ color:var(--accent2); }
+  .skills-code .com{ color:var(--muted); }
+  .skills-code .punct{ color:var(--muted); }
+
+  /* ---------- Contact ---------- */
+  .contact-row{ display:flex; flex-wrap:wrap; gap:14px; margin-top:6px; }
+  .btn{
+    font-family:var(--mono); font-size:13.5px;
+    border:1px solid var(--border); border-radius:8px;
+    padding:11px 18px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn:hover{ border-color:var(--accent); background:#F0F4F2; }
+  .btn.primary{ background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .btn.primary:hover{ background:#262B33; }
+
+  footer{ padding:40px 0 56px; }
+  footer .wrap{
+    border-top:1px solid var(--border); padding-top:22px;
+    font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .cursor{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabbar">
+  <div class="wrap">
+    <a class="tab active" href="#home">index.html</a>
+    <a class="tab" href="#about">about.js</a>
+    <a class="tab" href="#projects">projects.json</a>
+    <a class="tab" href="#skills">skills.yml</a>
+    <a class="tab" href="#contact">contact.md</a>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="wrap">
+    <span class="eyebrow">PORTFOLIO — BUILD 2026</span>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span></span><span></span><span></span>
+        <span class="title">yarden@dev: ~</span>
+      </div>
+      <div class="terminal-body" id="termBody">
+        <div class="line"><span class="prompt">$</span><span id="typed"></span><span class="cursor"></span></div>
+        <div class="terminal-out" id="termOut" style="opacity:0;"></div>
+      </div>
+    </div>
+
+    <h1>Yarden</h1>
+    <p class="role">Software developer building clean, functional things — incoming CS student at Stevens Institute of Technology. This site is where the code lives.</p>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="label">about</div>
+    <h2>// who's running this process</h2>
+    <div class="about-grid">
+      <p>I'm Yarden — currently heading into my freshman year at Stevens Institute of Technology, with a focus on software development. I like building things that work cleanly and look like someone cared about them.</p>
+      <p class="muted">Replace this paragraph with your real story: what got you into code, what you're learning right now, what kind of problems you like solving. Two or three sentences is plenty — let the projects below do the rest of the talking.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="label">projects</div>
+    <h2>// things I've shipped</h2>
+    <div class="projects">
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Project One</h3>
+          <div class="card-links"><a href="#" target="_blank">repo</a> · <a href="#" target="_blank">live</a></div>
+        </div>
+        <p>One or two sentences on what this project does and the problem it solves. Be specific about your role and the outcome.</p>
+        <div class="stack">
+          <span class="pill">Python</span>
+          <span class="pill">Flask</span>
+          <span class="pill">SQLite</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Project Two</h3>
+          <div class="card-links"><a href="#" target="_blank">repo</a> · <a href="#" target="_blank">live</a></div>
+        </div>
+        <p>Same format — what it does, why it's interesting, what you'd improve next. Recruiters skim, so lead with the result.</p>
+        <div class="stack">
+          <span class="pill">JavaScript</span>
+          <span class="pill">React</span>
+          <span class="pill">Node</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Project Three</h3>
+          <div class="card-links"><a href="#" target="_blank">repo</a> · <a href="#" target="_blank">live</a></div>
+        </div>
+        <p>Swap in a real project — a class assignment, a personal tool, a hackathon build. Anything that shows you can finish something.</p>
+        <div class="stack">
+          <span class="pill">Java</span>
+          <span class="pill">Algorithms</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Project Four</h3>
+          <div class="card-links"><a href="#" target="_blank">repo</a> · <a href="#" target="_blank">live</a></div>
+        </div>
+        <p>Even a small, well-documented script counts. Three or four solid projects beat ten half-finished ones.</p>
+        <div class="stack">
+          <span class="pill">C++</span>
+          <span class="pill">Systems</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="label">skills</div>
+    <h2>// stack</h2>
+    <div class="skills-code"><pre><span class="kw">const</span> skills = {
+  <span class="str">languages</span>: [<span class="str">"Python"</span>, <span class="str">"JavaScript"</span>, <span class="str">"Java"</span>, <span class="str">"C++"</span>],
+  <span class="str">tools</span>:     [<span class="str">"Git"</span>, <span class="str">"VS Code"</span>, <span class="str">"Linux"</span>],
+  <span class="str">learning</span>:  [<span class="str">"Data Structures"</span>, <span class="str">"Algorithms"</span>], <span class="com">// update as you go</span>
+};</pre></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="label">contact</div>
+    <h2>// get in touch</h2>
+    <p class="muted" style="max-width:50ch;">Open to internships, collaborations, or just talking shop about code. Easiest way to reach me is email.</p>
+    <div class="contact-row">
+      <a class="btn primary" href="mailto:you@example.com">↳ email me</a>
+      <a class="btn" href="https://github.com/yourusername" target="_blank">github</a>
+      <a class="btn" href="https://linkedin.com/in/yourusername" target="_blank">linkedin</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>yarden.dev</span>
+    <span>built 2026</span>
+  </div>
+</footer>
+
+<script>
+  // Hero terminal typing sequence
+  (function(){
+    const typedEl = document.getElementById('typed');
+    const outEl = document.getElementById('termOut');
+    const command = 'whoami';
+    const output = '→ Yarden — CS @ Stevens Institute of Technology';
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if(reduceMotion){
+      typedEl.textContent = command;
+      outEl.textContent = output;
+      outEl.style.opacity = 1;
+      return;
+    }
+
+    let i = 0;
+    function typeChar(){
+      if(i < command.length){
+        typedEl.textContent += command[i];
+        i++;
+        setTimeout(typeChar, 70);
+      } else {
+        setTimeout(() => {
+          outEl.style.transition = 'opacity .4s ease';
+          outEl.style.opacity = 1;
+          outEl.textContent = output;
+        }, 350);
+      }
+    }
+    setTimeout(typeChar, 500);
+  })();
+
+  // Active tab highlight on scroll
+  (function(){
+    const tabs = document.querySelectorAll('.tab');
+    const sections = Array.from(tabs).map(t => document.querySelector(t.getAttribute('href')));
+
+    function onScroll(){
+      let idx = 0;
+      const pos = window.scrollY + 120;
+      sections.forEach((sec, i) => { if(sec && sec.offsetTop <= pos) idx = i; });
+      tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  })();
+</script>
+
+</body>
+</html>
