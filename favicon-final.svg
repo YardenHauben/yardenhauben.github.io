@@ -4,5 +4,5 @@
       <rect width="64" height="64" rx="20"/>
     </clipPath>
   </defs>
-  <image href="IMG_0467.png"/>
+  <image href="IMG_0467.png" width="64" height="64" clip-path="url(#roundedCorners)" preserveAspectRatio="xMidYMid slice"/>
 </svg>
