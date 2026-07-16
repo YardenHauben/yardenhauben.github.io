@@ -73,6 +73,11 @@
       align-items:center;
       gap:2px;
       overflow-x:auto;
+      padding-left:54px;
+      scrollbar-width:none;
+    }
+    .tabbar .wrap::-webkit-scrollbar{
+      display:none;
     }
     .tab{
       font-family:var(--mono);
@@ -94,11 +99,13 @@
       color:var(--accent2);
     }
     .theme-toggle{
-      margin-left:auto;
-      flex-shrink:0;
+      position:fixed;
+      top:9px;
+      left:12px;
+      z-index:60;
       font-family:var(--mono);
       font-size:16px;
-      background:none;
+      background:var(--surface);
       border:1px solid var(--border);
       border-radius:7px;
       width:34px;
@@ -108,7 +115,11 @@
       justify-content:center;
       cursor:pointer;
       color:var(--ink);
-      transition:border-color .15s ease, background .15s ease;
+      box-shadow:0 2px 8px rgba(0, 0, 0, .12);
+      transition:border-color .15s ease, background .15s ease, box-shadow .3s ease;
+    }
+    html[data-theme = "dark"] .theme-toggle{
+      box-shadow:0 2px 10px rgba(0, 0, 0, .45);
     }
     .theme-toggle:hover{
       border-color:var(--accent);
@@ -899,6 +910,7 @@
     (function(){
         const tabs = document.querySelectorAll('.tab');
         const sections = Array.from(tabs).map(t => document.querySelector(t.getAttribute('href')));
+        let currentIdx = -1;
         function onScroll(){
           let idx = 0;
           const pos = window.scrollY + 120;
@@ -908,7 +920,11 @@
           } else {
             sections.forEach((sec, i) => { if(sec && sec.offsetTop <= pos) idx = i; });
           }
-          tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+          if(idx !== currentIdx){
+            currentIdx = idx;
+            tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+            tabs[idx].scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+          }
         }
         window.addEventListener('scroll', onScroll, { passive:true });
         onScroll();
